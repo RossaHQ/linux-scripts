@@ -1,0 +1,24 @@
+#!/bin/sh
+
+#move to the recycle_bin directory
+cd ~/recycle_bin
+#check if the file exists in the directory
+if [ -e $@ ]
+then
+	pathname=~/recycle_bin/pathnames.txt
+	#find the relevant pathname for the file
+	dest="$(grep "$@" "$pathname")"
+	
+	#find the direcotries for the pathname
+	original_dir="$(dirname "$dest")"
+	
+	#create the neccessary directories if they don't exist
+	mkdir -p "$original_dir"
+
+	#move the file to it's original directory
+	mv $@ "$dest" && echo "your file has been restored"
+
+else 
+	echo "there is no such file in the recycle bin"
+fi
+

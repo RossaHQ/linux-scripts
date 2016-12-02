@@ -1,0 +1,19 @@
+#!/bin/sh
+
+#create the recycle bin if it does not already exist
+mkdir -p ~/recycle_bin 
+#loop for each file inputted by the user
+for index in $@
+do 
+#validation to insure the file exists
+if [ -e $index ]
+then 
+	echo "deleting..."
+	#writes the absolute pathnames of the file(s) to a txt file
+	realpath "$index" >> ~/recycle_bin/pathnames.txt
+	#moves the file(s) to the recycle bin
+	mv $index ~/recycle_bin
+else 
+	echo "invalid file" 
+fi
+done
